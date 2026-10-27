@@ -1,23 +1,28 @@
-how to works with power shell vertual environment
+PowerShell virtual environment commands
 
-python -m venv iris_mlops_venv
-deactivate
-Remove-Item -Recurse -Force iris_mlops_venv --> remove the default verson
-py -3.12 -m venv iris_mlops_venv
+Create a virtual environment using Python 3.12:
+    py -3.12 -m venv iris_mlops_venv
 
-# to activate 
-virtual_environment+tab --> this will automaticall select the virutal invironment 
- then you have to Go inside ths Script and Activate.ps1
-        .\iris_mlops_venv\Scripts\Activate.ps1
+Activate it:
+    .\iris_mlops_venv\Scripts\Activate.ps1
 
-# to deactivate in powershell we use
-  deactivate
+If PowerShell blocks activation, allow scripts for this PowerShell session only:
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+Then activate the environment again.
 
+Deactivate the environment:
+    deactivate
 
+Recreate the environment (deactivate it first):
+    Remove-Item -Recurse -Force .\iris_mlops_venv
+    py -3.12 -m venv iris_mlops_venv
 
+Stop tracking the environment in Git (if it was already committed):
+    git rm -r --cached -- iris_mlops_venv
 
-how to untract the venv
+Add this entry to .gitignore:
+    iris_mlops_venv/
 
-git rm -r --cached venv
-git add .gitignore
-git commit -m "Stop tracking virtual environment"
+Then commit the change:
+    git add .gitignore
+    git commit -m "Stop tracking virtual environment"
